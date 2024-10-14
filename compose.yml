@@ -1,0 +1,38 @@
+version: '3.7'
+services:
+  web:
+    image: httpd:latest
+    container_name: apache_container
+    ports:
+      - "8080:80"
+    volumes:
+      - ./html:/usr/local/apache2/htdocs/
+    networks:
+      - my_network
+    environment:
+      - TZ=America/Sao_Paulo
+
+networks:
+  my_network:
+    driver: bridge
+
+
+===============================================
+HTML
+===============================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Info</title>
+</head>
+<body>
+    <h1>Server Information</h1>
+    <p>Server Name: <strong><?php echo $_SERVER['SERVER_NAME']; ?></strong></p>
+    <p>Server Address: <strong><?php echo $_SERVER['SERVER_ADDR']; ?></strong></p>
+    <p>Server Software: <strong><?php echo $_SERVER['SERVER_SOFTWARE']; ?></strong></p>
+    <p>Request Time: <strong><?php echo date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']); ?></strong></p>
+</body>
+</html>
